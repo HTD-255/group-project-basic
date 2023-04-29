@@ -73,19 +73,25 @@ void hienThiTTSV(struct SinhVien sv) {
 	sv.diem.toan, sv.diem.van, sv.diem.anh, sv.diem.tbc);
 }
 
-void diemGPAmax(struct SinhVien* sv, int n)
+void diemGPAmax(struct SinhVien* dssv, int slsv)
 {
     int index=1;
-    float max=(sv[1].diem.toan+sv[1].diem.van+sv[1].diem.anh)/3;
+    float max=dssv[0].diem.tbc;
     int i;
-    for(i=1;i<=n;i++)
+    for(i=1;i<=slsv;i++)
     {
-        if(((sv[i].diem.toan+sv[i].diem.van+sv[i].diem.anh)/3)>max)
-        {
-        max=(sv[i].diem.toan+sv[i].diem.van+sv[i].diem.anh)/3;
-        index=i;
-        }
+    	if (dssv[i].diem.tbc>max)
+    	   max = dssv[i].diem.tbc;
     }
+    for (i=0;i<slsv;i++)
+    {
+    	if (dssv[i].diem.tbc == max)
+    	{
+    		 printf("\nStudent has highest GPA is: %s", dssv[i].hoVaTen.ten);
+            printf("\nStudent ID is: %s", dssv[i].ma);
+            printf("\nStudent GPA is %0.2lf", dssv[i].diem.tbc);
+		}
+	}
     return ;
 }
 
@@ -115,10 +121,10 @@ int main() {
 	int luaChon;
 	
 	do {
-		printf("=============== MENU ===============");
+		printf("\n=============== MENU ===============");
 		printf("\n1. Them Sinh vien vao danh sach.");
 		printf("\n2. Hien thi danh sach sinh vien.");
-		printf("\n3. Sap xep theo diem giam dan.");
+		printf("\n3. Tim sinh vien co GPA cao nhat");
 		printf("\n4. Ghi thong tin sinh vien ra file.");
 		printf("\n0. Thoat chuong trinh.");
 		printf("\nBan chon ? ");
@@ -151,10 +157,8 @@ int main() {
 				break;
 				
 			case 3:
-				diemGPAmax();
-				printf("GPA cao nhat la: ");
+				diemGPAmax(dssv, slsv);
 				break;
-				
 			case 4:
 				ghiFile(dssv, slsv);
 				break;
